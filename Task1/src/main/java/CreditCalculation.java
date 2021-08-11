@@ -1,3 +1,5 @@
+import java.text.DecimalFormat;
+
 public class CreditCalculation {
     private final int amountOfCredit;
     private final int termOfCredit;
@@ -5,6 +7,7 @@ public class CreditCalculation {
     private double getCalculateByMonth;
     private double getRepaymentAmount;
     private double getCalculateOverpayment;
+    private final DecimalFormat decimalFormat = new DecimalFormat("#.##");
 
     public CreditCalculation(int amountOfCredit, int termOfCredit, double interestByCredit) {
         this.amountOfCredit = amountOfCredit;
@@ -14,7 +17,10 @@ public class CreditCalculation {
 
     //метод вычисления ежемесячного платежа
     public void calculateByMonth() {
-        return;
+        double coefficient;
+        coefficient = interestByCredit / 100 / 12;
+        getCalculateByMonth = amountOfCredit * (coefficient + (coefficient / (Math.pow(1 + coefficient, 24) - 1)));
+        System.out.println("Ежемемесячный платеж: " + decimalFormat.format(getCalculateByMonth));
     }
 
     public double getcalculateByMonth() {
@@ -23,7 +29,8 @@ public class CreditCalculation {
 
     //метод вычисления переплаты по кредиту
     public void CalculateOverpayment() {
-        return;
+        getCalculateOverpayment = getTotalRepaymentAmount() - amountOfCredit;
+        System.out.println("Переплата по кредиту: " + decimalFormat.format(getCalculateOverpayment));
     }
 
     public double getCalculateOverpayment() {
@@ -32,7 +39,8 @@ public class CreditCalculation {
 
     //метод вычисления полной суммы возарат по кредиту
     public void totalRepaymentAmount() {
-        return;
+        getRepaymentAmount = getcalculateByMonth() * termOfCredit;
+        System.out.println("Полная сумма возврата по кредиту: " + decimalFormat.format(getRepaymentAmount));
     }
 
     public double getTotalRepaymentAmount() {
